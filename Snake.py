@@ -65,6 +65,7 @@ def main():
 	snakePos = [(x,y)]
 	screen.fill((0,0,0))
 	
+	hasEdgeDeath = False
 	isFoodAvailable = False
 	hasFailed = False
 	exit = False
@@ -103,15 +104,20 @@ def main():
 					nextDir = 'RIGHT'
 				if curDir == 'LEFT' and event.key == pygame.K_SPACE:
 					nextDir = 'UP'
-										
-		if (x <= leftBorder and curDir == 'LEFT'): 
-			nextDir = 'UP'
-		if (x >= rightBorder and curDir == 'RIGHT'): 
-			nextDir = 'DOWN'
-		if (y <= topBorder and curDir == 'UP'):
-			nextDir = 'RIGHT'
-		if (y >= bottomBorder and curDir == 'DOWN'):
-			nextDir = 'LEFT'
+					
+		if hasEdgeDeath == False:								
+			if (x <= leftBorder and curDir == 'LEFT'): 
+				nextDir = 'UP'
+			if (x >= rightBorder and curDir == 'RIGHT'): 
+				nextDir = 'DOWN'
+			if (y <= topBorder and curDir == 'UP'):
+				nextDir = 'RIGHT'
+			if (y >= bottomBorder and curDir == 'DOWN'):
+				nextDir = 'LEFT'
+				
+                if (x < leftBorder or x > rightBorder or y < topBorder or y > bottomBorder):
+                        log('hasFailed')
+                        hasFailed = True
 			
 		x += directionPos[nextDir][0]
 		y += directionPos[nextDir][1]
